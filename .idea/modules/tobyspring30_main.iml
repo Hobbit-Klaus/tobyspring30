@@ -9,6 +9,23 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../libs/com.springsource.net.sf.cglib-2.2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:5.1.9" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-context:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-aop:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-beans:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-core:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-expression:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-asm:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Gradle: commons-logging:commons-logging:1.1.1" level="project" />
   </component>
 </module>
