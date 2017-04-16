@@ -8,14 +8,14 @@ import java.sql.*;
  * Created by Hobbit-Klaus on 2017-04-17.
  */
 public class UserDao {
-    SimpleConnectionMaker simpleConnectionMaker;
+    ConnectionMaker simpleConnectionMaker;
 
     public UserDao() {
-        simpleConnectionMaker = new SimpleConnectionMaker();
+        simpleConnectionMaker = new AnotherSimpleConnectionMaker();
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = simpleConnectionMaker.makeNewConnection();
+        Connection c = simpleConnectionMaker.makeConnection();
 
         PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?, ?, ?)");
         ps.setString(1, user.getId());
@@ -29,7 +29,7 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = simpleConnectionMaker.makeNewConnection();
+        Connection c = simpleConnectionMaker.makeConnection();
 
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
