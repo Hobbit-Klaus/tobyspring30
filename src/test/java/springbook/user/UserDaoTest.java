@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
  * Created by Hobbit-Klaus on 2017-04-17.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
+@ContextConfiguration(locations = "/test-applicationContext.xml")
 // 3.1.0.RC1 버전에서 추가됨
 //@ContextConfiguration(classes=DaoFactory.class)
 public class UserDaoTest {
