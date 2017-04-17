@@ -5,9 +5,14 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import springbook.user.dao.DaoFactory;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
@@ -16,7 +21,14 @@ import java.sql.SQLException;
 /**
  * Created by Hobbit-Klaus on 2017-04-17.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "/applicationContext.xml")
+// 3.1.0.RC1 버전에서 추가됨
+//@ContextConfiguration(classes=DaoFactory.class)
 public class UserDaoTest {
+    @Autowired
+    private ApplicationContext context;
+
     private UserDao dao;
     private User user1;
     private User user2;
@@ -24,10 +36,7 @@ public class UserDaoTest {
 
     @Before
     public void setUp() {
-//        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
         this.dao = context.getBean("userDao", UserDao.class);
-
         this.user1 = new User("gyumee", "박성철", "springno1");
         this.user2 = new User("leegw700", "이길원", "springno2");
         this.user3 = new User("bumjin", "박범진", "springno3");

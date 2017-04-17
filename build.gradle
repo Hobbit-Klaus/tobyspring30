@@ -23,4 +23,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
     compile group: 'org.springframework', name: 'spring-jdbc', version: '3.0.3.RELEASE'
 
+    // https://mvnrepository.com/artifact/org.springframework/spring-test
+    compile group: 'org.springframework', name: 'spring-test', version: '3.0.3.RELEASE'
+
 }

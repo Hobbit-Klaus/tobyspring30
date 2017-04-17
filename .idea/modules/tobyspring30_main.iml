@@ -21,6 +21,7 @@
     <orderEntry type="library" name="Gradle: mysql:mysql-connector-java:5.1.9" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-context:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-jdbc:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework:spring-test:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-aop:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-beans:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-core:3.0.3.RELEASE" level="project" />
