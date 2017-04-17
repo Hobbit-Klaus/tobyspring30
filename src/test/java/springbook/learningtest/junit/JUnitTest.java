@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  * Created by Hobbit-Klaus on 2017-04-18.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration(locations = "/junit.xml")
 public class JUnitTest {
     @Autowired
     ApplicationContext context;
