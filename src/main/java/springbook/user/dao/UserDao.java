@@ -34,16 +34,7 @@ public class UserDao {
 //            return ps;
 //        });
 
-        jdbcContext.workWithStatementStrategy(new StatementStrategy() {
-            @Override
-            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-                PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?, ?, ?)");
-                ps.setString(1, user.getId());
-                ps.setString(2, user.getName());
-                ps.setString(3, user.getPassword());
-                return ps;
-            }
-        });
+        executeSql("insert into users(id, name, password) values(?, ?, ?)", user.getId(), user.getName(), user.getPassword());
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
@@ -99,12 +90,7 @@ public class UserDao {
     public void deleteAll() throws SQLException {
 //        Spring Framework 4.x부터 JDK 1.8지원
 //        jdbcContext.workWithStatementStrategy(c -> c.prepareStatement("delete from users"));
-        jdbcContext.workWithStatementStrategy(new StatementStrategy() {
-            @Override
-            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-                return c.prepareStatement("delete from users");
-            }
-        });
+        executeSql("delete from users");
     }
 
     public int getCount() throws SQLException {
@@ -146,5 +132,21 @@ public class UserDao {
                 }
             }
         }
+    }
+
+    public void executeSql(String query, String... params) throws SQLException {
+        jdbcContext.workWithStatementStrategy(new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps = c.prepareStatement(query);
+
+                int index = 1;
+                for (String param : params) {
+                    ps.setString(index++, param);
+                }
+
+                return ps;
+            }
+        });
     }
 }
