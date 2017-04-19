@@ -9,39 +9,33 @@ import java.io.IOException;
  */
 class Calculator {
     Integer calcSum(String filepath) throws IOException {
-        return fileReadTemplate(filepath, new BufferedReaderCallback() {
+        return lineReadTemplate(filepath, 0, new LineCallback() {
             @Override
-            public Integer doSomethingWithReader(BufferedReader br) throws IOException {
-                Integer sum = 0;
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    sum += Integer.valueOf(line);
-                }
-                return sum;
+            public Integer doSomethingWithLine(String line, Integer value) {
+                return value + Integer.valueOf(line);
             }
         });
     }
 
     Integer calcMultiply(String filepath) throws IOException {
-        return fileReadTemplate(filepath, new BufferedReaderCallback() {
+        return lineReadTemplate(filepath, 1, new LineCallback() {
             @Override
-            public Integer doSomethingWithReader(BufferedReader br) throws IOException {
-                Integer multiply = 1;
-                String line = null;
-                while ((line = br.readLine()) != null) {
-                    multiply *= Integer.valueOf(line);
-                }
-                return multiply;
+            public Integer doSomethingWithLine(String line, Integer value) {
+                return value * Integer.valueOf(line);
             }
         });
     }
 
-    private Integer fileReadTemplate(String filepath, BufferedReaderCallback callback) throws IOException {
+    private Integer lineReadTemplate(String filepath, int initVal, LineCallback callback) throws IOException {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(filepath));
-            int ret = callback.doSomethingWithReader(br);
-            return ret;
+            Integer res = initVal;
+            String line;
+            while ((line = br.readLine()) != null) {
+                res = callback.doSomethingWithLine(line, res);
+            }
+            return res;
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw e;
@@ -55,4 +49,5 @@ class Calculator {
             }
         }
     }
+
 }
