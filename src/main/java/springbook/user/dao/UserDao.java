@@ -1,6 +1,8 @@
 package springbook.user.dao;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import springbook.user.domain.User;
 
 import javax.sql.DataSource;
@@ -14,27 +16,15 @@ import java.sql.SQLException;
  */
 public class UserDao {
     private DataSource dataSource;
-    private JdbcContext jdbcContext;
+    private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.dataSource = dataSource;
     }
 
-    public void setJdbcContext(JdbcContext jdbcContext) {
-        this.jdbcContext = jdbcContext;
-    }
-
     public void add(User user) throws ClassNotFoundException, SQLException {
-//        Spring Framework 4.x부터 JDK 1.8지원
-//        jdbcContext.workWithStatementStrategy(c -> {
-//            PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values(?, ?, ?)");
-//            ps.setString(1, user.getId());
-//            ps.setString(2, user.getName());
-//            ps.setString(3, user.getPassword());
-//            return ps;
-//        });
-
-        jdbcContext.executeSql("insert into users(id, name, password) values(?, ?, ?)", user.getId(), user.getName(), user.getPassword());
+        jdbcTemplate.update("insert into users(id, name, password) values(?, ?, ?)", user.getId(), user.getName(), user.getPassword());
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
@@ -88,9 +78,7 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
-//        Spring Framework 4.x부터 JDK 1.8지원
-//        jdbcContext.workWithStatementStrategy(c -> c.prepareStatement("delete from users"));
-        jdbcContext.executeSql("delete from users");
+        jdbcTemplate.update("delete from users");
     }
 
     public int getCount() throws SQLException {
