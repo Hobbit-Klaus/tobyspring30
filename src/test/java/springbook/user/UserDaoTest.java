@@ -22,8 +22,6 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/test-applicationContext.xml")
-// 3.1.0.RC1 버전에서 추가됨
-//@ContextConfiguration(classes=DaoFactory.class)
 public class UserDaoTest {
     @Autowired
     private ApplicationContext context;
