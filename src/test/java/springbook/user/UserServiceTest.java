@@ -43,6 +43,27 @@ public class UserServiceTest {
     }
 
     @Test
+    public void addWithOutLevel() {
+        userDao.deleteAll();
+
+        User user = users.get(0);
+        user.setLevel(null);
+        userService.add(user);
+
+        assertThat(userDao.get(user.getId()).getLevel(), is(Level.BASIC));
+    }
+
+    @Test
+    public void addWithLevel() {
+        userDao.deleteAll();
+
+        User user = users.get(4);
+        userService.add(user);
+
+        assertThat(userDao.get(user.getId()).getLevel(), is(Level.GOLD));
+    }
+
+    @Test
     public void upgradeLevels() {
         userDao.deleteAll();
         for (User user : users) {
