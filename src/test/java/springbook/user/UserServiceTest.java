@@ -11,9 +11,11 @@ import springbook.user.domain.Level;
 import springbook.user.domain.User;
 import springbook.user.service.UserService;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 
+import static junit.framework.TestCase.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static springbook.user.service.UserService.MIN_LOGCOUNT_FOR_SILVER;
@@ -26,10 +28,11 @@ import static springbook.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
 @ContextConfiguration(locations = "/test-applicationContext.xml")
 public class UserServiceTest {
     @Autowired
-    UserService userService;
-
+    private UserDao userDao;
     @Autowired
-    UserDao userDao;
+    private UserService userService;
+    @Autowired
+    private DataSource dataSource;
 
     private List<User> users;
 
@@ -66,12 +69,11 @@ public class UserServiceTest {
     }
 
     @Test
-    public void upgradeLevels() {
+    public void upgradeLevels() throws Exception {
         userDao.deleteAll();
         for (User user : users) {
             userDao.add(user);
         }
-
         userService.upgradeLevels();
 
         checkLevels(users.get(0), false);
@@ -88,5 +90,41 @@ public class UserServiceTest {
         } else {
             assertThat(userUpdate.getLevel(), is(user.getLevel()));
         }
+    }
+
+    @Test
+    public void upgradeAllOrNothing() throws Exception {
+        UserService testUserService = new TestUserService(users.get(3).getId());
+        testUserService.setUserDao(userDao);
+        testUserService.setDataSource(dataSource);
+
+        userDao.deleteAll();
+        for (User user : users) userDao.add(user);
+
+        try {
+            testUserService.upgradeLevels();
+            fail("TestUserServiceException expected");
+        } catch (TestUserServiceException e) {
+
+        }
+
+        checkLevels(users.get(1), false);
+    }
+
+    static class TestUserService extends UserService {
+        private String id;
+
+        private TestUserService(String id) {
+            this.id = id;
+        }
+
+        @Override
+        protected void upgradeLevel(User user) {
+            if (user.getId().equals(this.id)) throw new TestUserServiceException();
+            super.upgradeLevel(user);
+        }
+    }
+
+    static class TestUserServiceException extends RuntimeException {
     }
 }
