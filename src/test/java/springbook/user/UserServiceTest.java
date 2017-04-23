@@ -16,6 +16,8 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static springbook.user.service.UserService.MIN_LOGCOUNT_FOR_SILVER;
+import static springbook.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
 
 /**
  * Created by Hobbit-Klaus on 2017-04-24.
@@ -34,11 +36,11 @@ public class UserServiceTest {
     @Before
     public void setUp() {
         users = Arrays.asList(
-                new User("a", "AAA", "1234", Level.BASIC, 49, 0),
-                new User("b", "BBB", "1234", Level.BASIC, 50, 0),
-                new User("c", "CCC", "1234", Level.SILVER, 60, 29),
-                new User("d", "DDD", "1234", Level.SILVER, 60, 30),
-                new User("e", "EEE", "1234", Level.GOLD, 100, 100)
+                new User("a", "AAA", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER - 1, 0),
+                new User("b", "BBB", "1234", Level.BASIC, MIN_LOGCOUNT_FOR_SILVER, 0),
+                new User("c", "CCC", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD - 1),
+                new User("d", "DDD", "1234", Level.SILVER, 60, MIN_RECOMMEND_FOR_GOLD),
+                new User("e", "EEE", "1234", Level.GOLD, 100, Integer.MAX_VALUE)
         );
     }
 
