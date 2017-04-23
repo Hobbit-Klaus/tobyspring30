@@ -143,6 +143,8 @@ public class UserDaoTest {
         dao.deleteAll();
 
         dao.add(user1);
+        dao.add(user2);
+
         user1.setName("AAA");
         user1.setPassword("springno6");
         user1.setLevel(Level.GOLD);
@@ -152,6 +154,9 @@ public class UserDaoTest {
 
         User user1Update = dao.get(user1.getId());
         checkSameUser(user1, user1Update);
+
+        User user2same = dao.get(user2.getId());
+        checkSameUser(user2, user2same);
     }
 
     private void checkSameUser(User user1, User user2) {
