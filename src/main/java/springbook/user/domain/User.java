@@ -70,4 +70,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void upgradeLevel() {
+        Level nextLevel = level.nextLevel();
+        if (nextLevel == null) {
+            throw new IllegalStateException(level + "은 업그레이드가 불가능합니다.");
+        } else {
+            level = nextLevel;
+        }
+    }
 }
