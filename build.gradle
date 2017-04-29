@@ -26,4 +26,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-test
     compile group: 'org.springframework', name: 'spring-test', version: '3.0.3.RELEASE'
 
+    // https://mvnrepository.com/artifact/org.springframework/spring-context-support
+    compile group: 'org.springframework', name: 'spring-context-support', version: '3.0.3.RELEASE'
 }

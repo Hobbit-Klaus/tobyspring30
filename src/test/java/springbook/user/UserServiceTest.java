@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -29,6 +30,8 @@ import static springbook.user.service.UserService.MIN_RECOMMEND_FOR_GOLD;
 public class UserServiceTest {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private MailSender mailSender;
     @Autowired
     private UserService userService;
     @Autowired
@@ -96,6 +99,7 @@ public class UserServiceTest {
     public void upgradeAllOrNothing() throws Exception {
         UserService testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(userDao);
+        testUserService.setMailSender(mailSender);
         testUserService.setTransactionManager(transactionManager);
 
         userDao.deleteAll();
